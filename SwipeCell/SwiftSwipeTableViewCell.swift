@@ -164,6 +164,13 @@ class SwiftSwipeTableViewCell: UITableViewCell {
     func addOptions(_ options: [String], atIndexPath indexPath: IndexPath)  {
         self.indexPath = indexPath
         
+        arrOptions.removeAll()
+        for subview in self.contentView.subviews {
+            if subview is UIButton {
+                subview.removeFromSuperview()
+            }
+        }
+        
         let colors = [UIColor.red, UIColor.blue, UIColor.gray]
         
         for i in 0 ..< options.count {

@@ -95,6 +95,13 @@ static NSString * const kNotificationName = @"SwipeCellSlide";
     self.buttonBlock = buttonBlock;
     
     [self.arrOptions removeAllObjects];
+    for (id subview in self.contentView.subviews)
+    {
+        if ([subview isKindOfClass: [UIButton class]])
+        {
+            [subview removeFromSuperview];
+        }
+    }
     
     NSArray *arrColors = @[[UIColor redColor], [UIColor blueColor], [UIColor grayColor]];
     
