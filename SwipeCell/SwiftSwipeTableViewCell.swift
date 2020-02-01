@@ -24,7 +24,7 @@ extension Notification.Name {
 
 class SwiftSwipeTableViewCell: UITableViewCell {
 
-    weak var delegate: SwipeCell?
+    @objc weak var delegate: SwipeCell?
 
     @IBOutlet weak var slideView: UIView!
     @IBOutlet weak var lblTitle: UILabel!
@@ -71,7 +71,7 @@ class SwiftSwipeTableViewCell: UITableViewCell {
         if let panGesture = gestureRecognizer as? UIPanGestureRecognizer {
             let cell = panGesture.view
             let translation = panGesture.translation(in: cell?.superview)
-            if fabs(translation.x) > fabs(translation.y) {
+            if abs(translation.x) > abs(translation.y) {
                 return true
             }
         }
@@ -87,18 +87,20 @@ class SwiftSwipeTableViewCell: UITableViewCell {
         }
     }
     
+    @objc
     func receiveNotification(_ notification: Notification) {
-        let hashValue = notification.userInfo?["cell"] as? Int
+        let tag = notification.userInfo?["cell"] as? Int
         
-        if hashValue != self.hashValue {
+        if tag != self.tag {
             self.showOptions(false, true)
         }
     }
     
+    @objc
     func handlePanGesture(_ panGesture: UIPanGestureRecognizer) {
         switch panGesture.state {
         case .began:
-            let userInfo = ["cell": self.hashValue]
+            let userInfo = ["cell": self.tag]
             NotificationCenter.default.post(name: .swipeCellSlide, object: nil, userInfo: userInfo)
         case .changed:
             let translation = panGesture.translation(in: self)
@@ -161,6 +163,7 @@ class SwiftSwipeTableViewCell: UITableViewCell {
         }
     }
     
+    @objc
     func addOptions(_ options: [String], atIndexPath indexPath: IndexPath)  {
         self.indexPath = indexPath
         
@@ -189,6 +192,7 @@ class SwiftSwipeTableViewCell: UITableViewCell {
         }
     }
     
+    @objc
     func buttonTouched(_ sender: UIButton) {
         // TODO: check if delegate method responds
         

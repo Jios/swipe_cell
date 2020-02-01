@@ -82,6 +82,7 @@ static NSString * const kCellIdentifier = @"swiftSwipeCell";
     SwiftSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: kCellIdentifier
                                                                     forIndexPath: indexPath];
     
+    cell.tag = indexPath.row;
     cell.delegate = self;
     
     NSString *title = [NSString stringWithFormat: @"# %ld", (long)indexPath.row];
